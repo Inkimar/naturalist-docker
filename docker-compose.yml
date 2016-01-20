@@ -1,0 +1,32 @@
+share:
+  image: tianon/true
+  volumes:
+    - ./mysql-datadir:/var/lib/mysql:z
+    - ./mysql-shr:/shr:z
+    - ./mysql-autoload:/docker-entrypoint-initdb.d:ro
+    - ./mysql-conf.d:/etc/mysql/conf.d:z
+    - ./deployments:/opt/jboss/wildfly/standalone/deployments:z
+
+db:
+  image: mysql:5.5
+  environment:
+    - TZ=Europe/Stockholm
+    - MYSQL_ROOT_PASSWORD=supersecret
+    - MYSQL_DATABASE=taxonpages_v2
+    - MYSQL_USER=naturalist
+    - MYSQL_PASSWORD=password12
+  ports:
+    - "3306:3306"
+  volumes_from:
+    - share
+
+as:
+  image: jboss/wildfly:8.2.1.Final
+  environment:
+    - TZ=Europe/Stockholm
+    - VIRTUAL_HOST=test.naturforskaren.se
+  ports:
+    - "8181:8080"
+    - "9991:9990"
+  links:
+    - db
