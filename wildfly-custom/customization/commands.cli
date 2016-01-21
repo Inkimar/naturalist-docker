@@ -1,0 +1,24 @@
+batch
+
+deploy customization/mysql-connector-java-5.1.38-bin.jar
+
+#/subsystem=datasources/jdbc-driver=mysql:add(driver-name=mysql,driver-module-name=com.mysql.jdbc,driver-xa-datasource-class-name=com.mysql.jdbc.jdbc2.optional.MysqlXADataSource)
+
+data-source add --name=NaturDS \
+	--jndi-name=java:/NaturDS \
+	--driver-name=mysql-connector-java-5.1.38-bin.jar_com.mysql.jdbc.Driver_5_1 \
+	--connection-url=jdbc:mysql://db:3306/taxonpages_v2?useUnicode=true&amp;characterEncoding=UTF-8 \
+    	--user-name=naturalist \ 
+	--password=password12 \
+    	--check-valid-connection-sql="SELECT 1" \
+	--background-validation=true \
+	--background-validation-millis=60000 \
+	--flush-strategy=IdleConnections \
+	--min-pool-size=10 \
+	--max-pool-size=50 \
+	--pool-prefill=false \
+	--use-ccm=false \
+	--blocking-timeout-wait-millis=5000 \
+	--enabled=true
+
+run-batch

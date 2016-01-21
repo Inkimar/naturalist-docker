@@ -1,11 +1,15 @@
-share:
+fs_db:
   image: tianon/true
   volumes:
     - ./mysql-datadir:/var/lib/mysql:z
     - ./mysql-shr:/shr:z
     - ./mysql-autoload:/docker-entrypoint-initdb.d:ro
     - ./mysql-conf.d:/etc/mysql/conf.d:z
-    - ./deployments:/opt/jboss/wildfly/standalone/deployments:z
+
+fs_naturalist:
+  image: tianon/true
+    - ./srv/data:/srv
+    - ./srv/deployments:/opt/jboss/wildfly/standalone/deployments:z
 
 db:
   image: mysql:5.5
@@ -21,12 +25,25 @@ db:
     - share
 
 as:
-  image: jboss/wildfly:8.2.1.Final
+  build: ./wildfly-custom
   environment:
     - TZ=Europe/Stockholm
     - VIRTUAL_HOST=test.naturforskaren.se
   ports:
-    - "8181:8080"
-    - "9991:9990"
+    - "8080:8080"
+    - "9990:9990"
+  volumes_from:
+    - naturalist_srv
   links:
     - db
+
+ws:
+  image: jwilder/nginx-proxy
+  ports:
+    - "80:80"
+    - "443:443"
+  links:
+    - as
+  volumes:
+    - /var/run/docker.sock:/tmp/docker.sock:ro
+
