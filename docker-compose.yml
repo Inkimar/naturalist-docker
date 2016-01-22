@@ -8,7 +8,8 @@ fs_db:
 
 fs_naturalist:
   image: tianon/true
-    - ./srv/data:/srv
+  volumes:
+    - ./srv/data:/opt/data
     - ./srv/deployments:/opt/jboss/wildfly/standalone/deployments:z
 
 db:
@@ -18,11 +19,11 @@ db:
     - MYSQL_ROOT_PASSWORD=supersecret
     - MYSQL_DATABASE=taxonpages_v2
     - MYSQL_USER=naturalist
-    - MYSQL_PASSWORD=password12
+    - MYSQL_PASSWORD=passw0rd12
   ports:
     - "3306:3306"
   volumes_from:
-    - share
+    - fs_db
 
 as:
   build: ./wildfly-custom
@@ -33,7 +34,7 @@ as:
     - "8080:8080"
     - "9990:9990"
   volumes_from:
-    - naturalist_srv
+    - fs_naturalist
   links:
     - db
 

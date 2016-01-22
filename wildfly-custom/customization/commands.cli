@@ -9,7 +9,24 @@ data-source add --name=NaturDS \
 	--driver-name=mysql-connector-java-5.1.38-bin.jar_com.mysql.jdbc.Driver_5_1 \
 	--connection-url=jdbc:mysql://db:3306/taxonpages_v2?useUnicode=true&amp;characterEncoding=UTF-8 \
     	--user-name=naturalist \ 
-	--password=password12 \
+	--password=passw0rd12 \
+    	--check-valid-connection-sql="SELECT 1" \
+	--background-validation=true \
+	--background-validation-millis=60000 \
+	--flush-strategy=IdleConnections \
+	--min-pool-size=10 \
+	--max-pool-size=50 \
+	--pool-prefill=false \
+	--use-ccm=false \
+	--blocking-timeout-wait-millis=5000 \
+	--enabled=true
+
+data-source add --name=MediaDS \
+	--jndi-name=java:/MediaNaturforskarenDS \
+	--driver-name=mysql-connector-java-5.1.38-bin.jar_com.mysql.jdbc.Driver_5_1 \
+	--connection-url=jdbc:mysql://db:3306/media_nf_20151014?useUnicode=true&amp;characterEncoding=UTF-8 \
+    	--user-name=naturalist \ 
+	--password=passw0rd12 \
     	--check-valid-connection-sql="SELECT 1" \
 	--background-validation=true \
 	--background-validation-millis=60000 \
