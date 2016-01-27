@@ -3,13 +3,13 @@ Integration project with DINA-Web applications including for example The Natural
 
 # How-To-Run this project
 before you run the 'docker-compose up'-command :
-	- set the correct credentials in the 'get_mysql_data.sh '-script
-	- run the 'get_mysql_data.sh'-script
-	- run the 'get_fs_data.sh'-script
-
+1. set the correct credentials in the 'get_mysql_data.sh '-script
+2. run the 'get_mysql_data.sh'-script
+3. run the 'get_fs_data.sh'-script
+<br>
 check the following directories:
-	- ~/dw-system/mysql-autoload
-	- ~/dw-system/srv/data
+1. ~/dw-system/mysql-autoload
+2. ~/dw-system/srv/data
 
 # TODO
 	- Fix deployment of mysql jdbc jar, ENABLE?
