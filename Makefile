@@ -11,8 +11,11 @@ up:
 	echo "setting up certificates"
 	#cp combined.pem nginx-certs/cert.pem
 	#cp key.pem nginx-certs/cert.key
+	echo "cp taxonpages_v2.sql "
 	cp srv/data/taxonpages_v2.sql mysql-autoload
-	#tar xvfz srv/data/nf-mediafiles.tgz --strip-components=2
+	echo "tar xvfz on mediafiles "
+	tar xvfz srv/data/nf-mediafiles.tgz --strip-components=2 -C srv/data/
+	rm srv/data/nf-mediafiles.tgz
 
 	docker-compose up -d db
 	
@@ -28,7 +31,5 @@ rm:
 	docker-compose rm -vf
 
 reload:
-	docker exec -i dwcollectionsui_ui_1 nginx -s reload
+	#docker exec -i dwcollectionsui_ui_1 nginx -s reload
 
-cp-sql:
-	cp srv/data/taxonpages_v2.sql mysql-autoload
