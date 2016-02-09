@@ -21,7 +21,7 @@ db:
     - MYSQL_USER=naturalist
     - MYSQL_PASSWORD=passw0rd12
   ports:
-    - "3306:3306"
+    - "13306:3306"
   volumes_from:
     - fs_db
 
@@ -31,8 +31,8 @@ as:
     - TZ=Europe/Stockholm
     - VIRTUAL_HOST=test.naturforskaren.se
   ports:
-    - "8080:8080"
-    - "9990:9990"
+    - "18080:8080"
+    - "19990:9990"
   volumes_from:
     - fs_naturalist
   links:
