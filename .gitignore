@@ -2,5 +2,9 @@
 *.sh~
 .gitignore~
 .gitignore.swp
+
+#directories
+nf
 mysql-datadir
+srv/deployments/naturalist.war.failed
 srv/data/nf-mediafiles.tgz

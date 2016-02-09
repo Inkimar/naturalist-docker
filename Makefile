@@ -12,7 +12,7 @@ up:
 	#cp combined.pem nginx-certs/cert.pem
 	#cp key.pem nginx-certs/cert.key
 	cp srv/data/taxonpages_v2.sql mysql-autoload
-	tar xvfz nf-data.tgz --strip-components=2 srv/data/nf-mediafiles.tgz
+	#tar xvfz srv/data/nf-mediafiles.tgz --strip-components=2
 
 	docker-compose up -d db
 	
