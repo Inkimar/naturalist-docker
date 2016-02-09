@@ -1,4 +1,6 @@
 #!/bin/bash
-scp -i ~/.ssh/build.pem ubuntu@test.naturforskaren.se:/tmp/nf-data.tgz srv/data .
-cd srv/data
-tar xvfz nf-data.tgz --strip-components=2
+# scp -i ~/.ssh/build.pem ubuntu@test.naturforskaren.se:/tmp/nf-data.tgz srv/data .
+# cd srv/data
+# tar xvfz nf-data.tgz --strip-components=2
+
+# cp srv/data/taxonpages_v2.sql mysql-autoload

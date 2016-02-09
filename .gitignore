@@ -1,3 +1,6 @@
 *~
 *.sh~
 .gitignore~
+.gitignore.swp
+mysql-datadir
+srv/data/nf-mediafiles.tgz
