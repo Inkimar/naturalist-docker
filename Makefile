@@ -14,6 +14,9 @@ prepare:
 	echo "Installing image files"
 	./get_fs_data.sh
 
+	echo "Installing app file (.war)"
+	./get_war.sh
+
 	echo "Installing nginx certs and DINA favicon"
 	./get_nginx_certs.sh
 	
@@ -24,7 +27,8 @@ up:
 	docker-compose up -d
 
 	echo "Please make sure you have naturforskaren.dina-web.net in your /etc/hosts!"
-	wget --retry-connrefused --tries=5 --waitretry=6 -q --no-check-certificate "https://naturforskaren.dina-web.net/naturalist/"
+	sleep 5
+	wget --retry-connrefused --tries=5 --waitretry=6 --no-check-certificate "https://naturforskaren.dina-web.net/naturalist/"
 
 	echo "Opening app!"
 	firefox https://naturforskaren.dina-web.net/naturalist/
