@@ -12,6 +12,14 @@ fs_naturalist:
     - ./srv/data:/opt/data
     - ./srv/deployments:/opt/jboss/wildfly/standalone/deployments:z
 
+fs_ws:
+  image: tianon/true
+  volumes:
+    - ./nginx-html:/usr/share/nginx/html:z
+    - ./nginx-conf:/etc/nginx/conf.d:z
+    - ./nginx-certs:/etc/nginx/ssl:z
+    - ./nginx-logs:/etc/nginx/logs:z
+
 db:
   image: mysql:5.5
   environment:
@@ -27,24 +35,20 @@ db:
 
 as:
   build: ./wildfly-custom
-  environment:
-    - TZ=Europe/Stockholm
-    - VIRTUAL_HOST=test.naturforskaren.se
   ports:
-    - "18080:8080"
-    - "19990:9990"
+    - "8080"
+    - "9990"
   volumes_from:
     - fs_naturalist
   links:
     - db
 
 ws:
-  image: jwilder/nginx-proxy
+  image: nginx
   ports:
     - "80:80"
     - "443:443"
+  volumes_from:
+    - fs_ws
   links:
     - as
-  volumes:
-    - /var/run/docker.sock:/tmp/docker.sock:ro
-

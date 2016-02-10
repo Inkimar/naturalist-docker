@@ -1,35 +1,36 @@
-all: build up
+all: build prepare up
 
 clean: stop rm
-	#sudo chown -R $(ME) nginx-conf nginx-html nginx-certs nginx-logs
+	sudo chown -R $(ME):$(ME) nginx-conf nginx-html nginx-certs nginx-logs
+	sudo chown -R $(ME):$(ME) mysql-datadir mysql-shr mysql-autoload mysql-conf.d
 
-build:
-	docker build --no-cache . 
-#	docker build --no-cache -t $(NAME):$(VERSION) . 
-
-up:
-	echo "setting up certificates"
-	#cp combined.pem nginx-certs/cert.pem
-	#cp key.pem nginx-certs/cert.key
-	echo "cp taxonpages_v2.sql "
-	cp srv/data/taxonpages_v2.sql mysql-autoload
-	echo "tar xvfz on mediafiles "
-	tar xvfz srv/data/nf-mediafiles.tgz --strip-components=2 -C srv/data/
-	rm srv/data/nf-mediafiles.tgz
+prepare:
+	echo "Retrieving databases - for naturalist and mediaserver"
+	./get_db_data.sh
 
 	docker-compose up -d db
+	docker-compose logs db
+
+	echo "Installing image files"
+	./get_fs_data.sh
+
+	echo "Installing nginx certs and DINA favicon"
+	./get_nginx_certs.sh
 	
-	docker-compose up -d as
+build:
+	docker-compose build --no-cache as
 
+up:
+	docker-compose up -d
 
-	# firefox https://beta.dina-web.net
+	echo "Please make sure you have naturforskaren.dina-web.net in your /etc/hosts!"
+	wget --retry-connrefused --tries=5 --waitretry=6 -q --no-check-certificate "https://naturforskaren.dina-web.net/naturalist/"
 
+	echo "Opening app!"
+	firefox https://naturforskaren.dina-web.net/naturalist/
 stop:
 	docker-compose stop
 
 rm:
 	docker-compose rm -vf
-
-reload:
-	#docker exec -i dwcollectionsui_ui_1 nginx -s reload
 

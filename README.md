@@ -1,21 +1,19 @@
 # dw-system
+
 Integration project with DINA-Web applications including for example The Naturalist, The Media Server, Loan, Inventory, DNA Key and Naturarv
 
-# How-To-Run this project
-before you run the 'docker-compose up'-command 
+# Usage
 
-<br>
-1. set the correct credentials in the 'get_mysql_data.sh '-script
-2. run the 'get_mysql_data.sh'-script
-3. run the 'get_fs_data.sh'-script
-<br>
+Use `make` to manage this docker composition of services:
 
-check the following directories:
-1. ~/dw-system/mysql-autoload
-2. ~/dw-system/srv/data
-<br>
+See the Makefile for available commands.
 
-# TODO
-	- Fix deployment of mysql jdbc jar, ENABLE?
+	- `make prepare` is required for starting and will load image data and database dumps
+	- `make clean` stops and removes all running services (leaving host data dirs with persisted data)
+	- `make up` will start the system (once "prepared" ie data was initially loaded)
+
+# Gotcha
+
+The system will not start without having data loaded, so you need to have database dumps and image files available (mounted at /media/buffalo ...)
 
 
