@@ -8,7 +8,7 @@ Use `make` to manage this docker composition of services:
 
 See the Makefile for available commands.
 
-	- `make prepare` is required for starting and will load image data and database dumps
+	- `make init` is required for starting and will load image data and database dumps
 	- `make clean` stops and removes all running services (leaving host data dirs with persisted data)
 	- `make up` will start the system (once "prepared" ie data was initially loaded)
 
