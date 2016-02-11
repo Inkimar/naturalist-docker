@@ -1,10 +1,11 @@
+ME=$(USER)
 all: build prepare up
 
 clean: stop rm
 	sudo chown -R $(ME):$(ME) nginx-conf nginx-html nginx-certs nginx-logs
 	sudo chown -R $(ME):$(ME) mysql-datadir mysql-shr mysql-autoload mysql-conf.d
 
-prepare:
+init:
 	echo "Retrieving databases - for naturalist and mediaserver"
 	./get_db_data.sh
 
