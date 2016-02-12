@@ -1,10 +1,10 @@
-fs_db:
+fs_db.nf:
   image: tianon/true
   volumes:
-    - ./mysql-datadir:/var/lib/mysql:z
-    - ./mysql-shr:/shr:z
-    - ./mysql-autoload:/docker-entrypoint-initdb.d:ro
-    - ./mysql-conf.d:/etc/mysql/conf.d:z
+    - ./mysql_nf-datadir:/var/lib/mysql:z
+    - ./mysql_nf-shr:/shr:z
+    - ./mysql_nf-autoload:/docker-entrypoint-initdb.d:ro
+    - ./mysql_nf-conf.d:/etc/mysql/conf.d:z
 
 fs_naturalist:
   image: tianon/true
@@ -20,7 +20,7 @@ fs_ws:
     - ./nginx-certs:/etc/nginx/ssl:z
     - ./nginx-logs:/etc/nginx/logs:z
 
-db:
+db.nf:
   image: mysql:5.5
   environment:
     - TZ=Europe/Stockholm
@@ -31,7 +31,7 @@ db:
   ports:
     - "13306:3306"
   volumes_from:
-    - fs_db
+    - fs_db.nf
 
 as:
   build: ./wildfly-custom
@@ -41,7 +41,7 @@ as:
   volumes_from:
     - fs_naturalist
   links:
-    - db
+    - db.nf:db
 
 ws:
   image: nginx

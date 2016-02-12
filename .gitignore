@@ -6,18 +6,16 @@ combined.pem
 key.pem
 index.html
 
-mysql-autoload/taxonpages_v2.sql
-images
 
 #directories
 nginx-certs
 nginx-html
 nginx-logs
 
-nf
-mysql-datadir
+mysql_nf-datadir
 srv/deployments/naturalist.war.failed
 srv/deployments/naturalist.war.deployed
 srv/data/nf-mediafiles.tgz
+srv/data/test_nf-mediafiles.tgz
 srv/data/taxonpages_v2.sql.old
 srv/deployments/naturalist.war
