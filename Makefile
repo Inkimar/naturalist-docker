@@ -8,15 +8,16 @@ clean: stop rm
 init:
 	echo "Retrieving databases - for naturalist and mediaserver"
 	./get_db_data.sh
-
+	echo "set up database taxonpages_v2"
 	docker-compose up -d db.nf
-	#docker-compose logs db_nf
+	echo "set up database nf_media"
+	docker-compose up -d db.media
 	
 	echo "Installing app file (.war)"
 	./get_war.sh
 
 	echo "Installing image files"
-	./get_fs_data.sh
+	#./get_fs_data.sh
 
 	echo "Installing nginx certs and DINA favicon"
 	./get_nginx_certs.sh
@@ -29,10 +30,13 @@ up:
 
 	echo "Please make sure you have naturforskaren.dina-web.net in your /etc/hosts!"
 	sleep 5
-	wget --retry-connrefused --tries=5 --waitretry=6 --no-check-certificate "https://naturforskaren.dina-web.net/naturalist/"
+	#wget --retry-connrefused --tries=5 --waitretry=6 --no-check-certificate "https://naturforskaren.dina-web.net/naturalist/"        
+	wget --retry-connrefused --tries=5 --waitretry=6 --no-check-certificate "https://naturforskaren.dina-web.net/nf-naturalist/"
 
 	echo "Opening app!"
-	firefox https://naturforskaren.dina-web.net/naturalist/&
+	#firefox https://naturforskaren.dina-web.net/naturalist/&
+	firefox https://naturforskaren.dina-web.net/nf-naturalist/&
+
 stop:
 	docker-compose stop
 
