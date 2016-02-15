@@ -22,7 +22,7 @@ data-source add --name=NaturDS \
 	--enabled=true
 
 data-source add --name=MediaDS \
-	--jndi-name=java:/java:/MigrationDS \
+	--jndi-name=java:/MigrationDS \
 	--driver-name=mysql-connector-java-5.1.38-bin.jar_com.mysql.jdbc.Driver_5_1 \
 	--connection-url=jdbc:mysql://dbmedia:3306/nf_media?useUnicode=true&amp;characterEncoding=UTF-8 \
     	--user-name=mediaserver \ 
