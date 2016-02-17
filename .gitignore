@@ -26,9 +26,9 @@ srv/deployments/mediaserver-nf.ear
 srv/deployments/mediaserver-nf.ear.failed
 srv/deployments/mediaserver-nf.ear.undeployed
 srv/data/nf-mediafiles.tgz
-srv/data/media-files-201600203.tgz
-srv/data/test_nf-mediafiles.tgz
-
+srv/deployments/mediaserver-nf.ear.deployed
+srv/deployments/naturalist-mediaserver-20160216.war
+srv/deployments/naturalist-mediaserver-20160216.war.undeployed
 srv/data/taxonpages_v2.sql.old
 mysql_nf-autoload/taxonpages_v2.sql
 srv/deployments/naturalist.war

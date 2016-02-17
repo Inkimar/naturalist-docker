@@ -53,6 +53,7 @@ fs_naturalist:
   volumes:
     - ./srv/data:/opt/data
     - ./srv/deployments:/opt/jboss/wildfly/standalone/deployments:z
+    - ./srv/log:/opt/jboss/wildfly/nf-logs
 
 as:
   build: ./wildfly-custom
