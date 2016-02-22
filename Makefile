@@ -17,7 +17,7 @@ init:
 	./get_war.sh
 
 	echo "Installing image files"
-	#./get_fs_data.sh
+	./get_fs_data.sh
 
 	echo "Installing nginx certs and DINA favicon"
 	./get_nginx_certs.sh
