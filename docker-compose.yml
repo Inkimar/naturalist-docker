@@ -68,6 +68,8 @@ as:
 
 ws:
   image: nginx
+  environment:
+    - VIRTUAL_HOST=naturforskaren.dina-web.net
   volumes_from:
     - fs_ws
   links:
