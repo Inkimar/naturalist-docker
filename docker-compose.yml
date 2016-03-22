@@ -6,13 +6,13 @@ fs_db.nf:
     - ./mysql_nf-autoload:/docker-entrypoint-initdb.d:ro
     - ./mysql_nf-conf.d:/etc/mysql/conf.d:z
 
-fs_db.media:
-  image: tianon/true
-  volumes:
-    - ./mysql_media-datadir:/var/lib/mysql:z
-    - ./mysql_media-shr:/shr:z
-    - ./mysql_media-autoload:/docker-entrypoint-initdb.d:ro
-    - ./mysql_media-conf.d:/etc/mysql/conf.d:z
+#fs_db.media:
+#  image: tianon/true
+#  volumes:
+#    - ./mysql_media-datadir:/var/lib/mysql:z
+#    - ./mysql_media-shr:/shr:z
+#    - ./mysql_media-autoload:/docker-entrypoint-initdb.d:ro
+#    - ./mysql_media-conf.d:/etc/mysql/conf.d:z
 
 fs_ws:
   image: tianon/true
@@ -30,46 +30,53 @@ db.nf:
     - MYSQL_DATABASE=taxonpages_v2
     - MYSQL_USER=naturalist
     - MYSQL_PASSWORD=passw0rd12
-  ports:
-    - "13306:3306"
+#  ports:
+#    - "13306:3306"
   volumes_from:
     - fs_db.nf
 
-db.media:
-  image: mysql:5.5
-  environment:
-    - TZ=Europe/Stockholm
-    - MYSQL_ROOT_PASSWORD=supersecret
-    - MYSQL_DATABASE=nf_media
-    - MYSQL_USER=mediaserver
-    - MYSQL_PASSWORD=mediaserver
-  ports:
-    - "23306:3306"
-  volumes_from:
-    - fs_db.media
+#db.media:
+#  image: mysql:5.5
+#  environment:
+#    - TZ=Europe/Stockholm
+#    - MYSQL_ROOT_PASSWORD=supersecret
+#    - MYSQL_DATABASE=nf_media
+#    - MYSQL_USER=mediaserver
+#    - MYSQL_PASSWORD=mediaserver
+#  ports:
+#    - "23306:3306"
+#  volumes_from:
+#    - fs_db.media
 
 fs_naturalist:
   image: tianon/true
   volumes:
     - ./srv/data:/opt/data
     - ./srv/deployments:/opt/jboss/wildfly/standalone/deployments:z
+    - ./srv/releases:/opt/jboss/wildfly/releases
     - ./srv/log:/opt/jboss/wildfly/nf-logs
 
 as:
   build: ./wildfly-custom
-  ports:
-    - "8080"
-    - "9990"
+#  ports:
+#    - "8080"
+#    - "9990"
+
   volumes_from:
     - fs_naturalist
   links:
     - db.nf:dbnf
-    - db.media:dbmedia
+    #- db.media:dbmedia
+  external_links:
+   - dwdockermedia_web_1:beta-media.dina-web.net
 
 ws:
   image: nginx
   environment:
-    - VIRTUAL_HOST=naturforskaren.dina-web.net
+   - VIRTUAL_HOST=beta-naturforskaren.dina-web.net
+   - VIRTUAL_PORT=443
+   - VIRTUAL_PROTO=https
+   - CERT_NAME=shared
   volumes_from:
     - fs_ws
   links:

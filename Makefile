@@ -28,14 +28,13 @@ build:
 up:
 	docker-compose up -d
 
-	echo "Please make sure you have naturforskaren.dina-web.net in your /etc/hosts!"
-	sleep 5
-	#wget --retry-connrefused --tries=5 --waitretry=6 --no-check-certificate "https://naturforskaren.dina-web.net/naturalist/"        
-	wget --retry-connrefused --tries=5 --waitretry=6 --no-check-certificate "https://naturforskaren.dina-web.net/nf-naturalist/"
+	echo "Local:: Please make sure you have naturforskaren.dina-web.net in your /etc/hosts!"
+	sleep 15
+	# wget --retry-connrefused --tries=5 --waitretry=6 --no-check-certificate "https://beta-naturforskaren.dina-web.net/nf-naturalist/"
 
-	echo "Opening app!"
-	#firefox https://naturforskaren.dina-web.net/naturalist/&
-	firefox https://naturforskaren.dina-web.net/nf-naturalist/&
+	#echo "Opening app!"
+	#firefox https://beta-naturforskaren.dina-web.net/nf-naturalist/&
+
 
 stop:
 	docker-compose stop
