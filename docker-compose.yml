@@ -68,7 +68,8 @@ as:
     - db.nf:dbnf
     #- db.media:dbmedia
   external_links:
-   - dwdockermedia_web_1:beta-media.dina-web.net
+#   - dwdockermedia_web_1:beta-media.dina-web.net
+   - dwmedia_web_1:beta-media.dina-web.net
 
 ws:
   image: nginx
