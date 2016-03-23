@@ -6,11 +6,18 @@ ADD modules /opt/jboss/wildfly/modules/
 ADD customization /opt/jboss/wildfly/customization/
 
 USER root
-RUN echo "root:password12" | chpasswd
-RUN yum -y install ca-certificates ca-certificates-java && yum clean all
-RUN curl http://curl.haxx.se/ca/cacert.pem -o /etc/pki/tls/certs/ca-bundle.crt
+RUN yum -y install p11-kit-nss-trust openssl ca-certificates && yum clean all
+ RUN curl http://curl.haxx.se/ca/cacert.pem -o /etc/pki/tls/certs/ca-bundle.crt
+
+RUN mkdir -p /usr/share/ssl/certs
+RUN cp /etc/pki/tls/certs/ca-bundle.crt /usr/share/ssl/certs/ca-bundle.crt
+ADD ./default.crt /etc/pki/ca-trust/source/anchors/
+
+RUN update-ca-trust enable
 RUN update-ca-trust check
-RUN update-ca-trust force-enable
+RUN update-ca-trust extract
+
+RUN echo "root:password12" | chpasswd
 
 RUN chmod +x /opt/jboss/wildfly/customization/execute.sh
 RUN /opt/jboss/wildfly/customization/execute.sh
