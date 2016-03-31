@@ -1,5 +1,5 @@
 ME=$(USER)
-all: build prepare up
+all: build init up
 
 clean: stop rm
 	sudo chown -R $(ME):$(ME) nginx-conf nginx-html nginx-certs nginx-logs
@@ -8,10 +8,8 @@ clean: stop rm
 init:
 	echo "Retrieving databases - for naturalist and mediaserver"
 	./get_db_data.sh
-	echo "set up database taxonpages_v2"
-	docker-compose up -d db.nf
-	echo "set up database nf_media"
-	docker-compose up -d db.media
+#	echo "set up database nf_media"
+#	docker-compose up -d db.media
 	
 	echo "Installing app file (.war)"
 	./get_war.sh
