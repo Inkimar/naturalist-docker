@@ -8,8 +8,7 @@ clean: stop rm
 init:
 	echo "Retrieving databases - for naturalist and mediaserver"
 	./get_db_data.sh
-#	echo "set up database nf_media"
-#	docker-compose up -d db.media
+#	docker-compose up -d db.nf
 	
 	echo "Installing app file (.war)"
 	./get_war.sh
