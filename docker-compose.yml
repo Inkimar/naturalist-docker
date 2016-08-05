@@ -6,21 +6,13 @@ fs_db.nf:
     - ./mysql_nf-autoload:/docker-entrypoint-initdb.d:ro
     - ./mysql_nf-conf.d:/etc/mysql/conf.d:z
 
-#fs_db.media:
-#  image: tianon/true
-#  volumes:
-#    - ./mysql_media-datadir:/var/lib/mysql:z
-#    - ./mysql_media-shr:/shr:z
-#    - ./mysql_media-autoload:/docker-entrypoint-initdb.d:ro
-#    - ./mysql_media-conf.d:/etc/mysql/conf.d:z
-
 fs_ws:
   image: tianon/true
   volumes:
-    - ./nginx-html:/usr/share/nginx/html:z
-    - ./nginx-conf:/etc/nginx/conf.d:z
-    - ./nginx-certs:/etc/nginx/ssl:z
-    - ./nginx-logs:/etc/nginx/logs:z
+#    - ./nginx-html:/usr/share/nginx/html:z
+    - ./nginx-conf:/etc/nginx/conf.d:rw
+    - ./nginx-certs:/etc/nginx/ssl:rw
+    - ./nginx-logs:/etc/nginx/logs:rw
 
 db.nf:
   image: mysql:5.5
@@ -30,23 +22,8 @@ db.nf:
     - MYSQL_DATABASE=taxonpages_v2
     - MYSQL_USER=naturalist
     - MYSQL_PASSWORD=passw0rd12
-#  ports:
-#    - "13306:3306"
   volumes_from:
     - fs_db.nf
-
-#db.media:
-#  image: mysql:5.5
-#  environment:
-#    - TZ=Europe/Stockholm
-#    - MYSQL_ROOT_PASSWORD=supersecret
-#    - MYSQL_DATABASE=nf_media
-#    - MYSQL_USER=mediaserver
-#    - MYSQL_PASSWORD=mediaserver
-#  ports:
-#    - "23306:3306"
-#  volumes_from:
-#    - fs_db.media
 
 fs_naturalist:
   image: tianon/true
@@ -58,26 +35,20 @@ fs_naturalist:
 
 as:
   build: ./wildfly-custom
-#  ports:
-#    - "8080"
-#    - "9990"
-
   volumes_from:
     - fs_naturalist
   links:
     - db.nf:dbnf
-    #- db.media:dbmedia
-  external_links:
-#   - dwdockermedia_web_1:beta-media.dina-web.net
-   - dwmedia_web_1:beta-media.dina-web.net
+ # external_links:
+ #  - dwmedia_web_1:beta-media.dina-web.net
 
 ws:
   image: nginx
   environment:
    - VIRTUAL_HOST=beta-naturforskaren.dina-web.net
-   - VIRTUAL_PORT=443
-   - VIRTUAL_PROTO=https
-   - CERT_NAME=shared
+   #- VIRTUAL_PORT=443
+   #- VIRTUAL_PROTO=https
+   #- CERT_NAME=shared
   volumes_from:
     - fs_ws
   links:

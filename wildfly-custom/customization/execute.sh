@@ -12,7 +12,7 @@ JBOSS_CONFIG=${2:-"$JBOSS_MODE.xml"}
 
 function wait_for_server() {
   until `$JBOSS_CLI -c "ls /deployment" &> /dev/null`; do
-    sleep 1
+    sleep 15
   done
 }
 

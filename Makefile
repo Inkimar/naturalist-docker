@@ -1,5 +1,5 @@
 ME=$(USER)
-all: build prepare up
+all: build init up
 
 clean: stop rm
 	sudo chown -R $(ME):$(ME) nginx-conf nginx-html nginx-certs nginx-logs
@@ -10,13 +10,11 @@ init:
 	./get_db_data.sh
 	echo "set up database taxonpages_v2"
 	docker-compose up -d db.nf
-	echo "set up database nf_media"
-	docker-compose up -d db.media
 	
 	echo "Installing app file (.war)"
 	./get_war.sh
 
-	echo "Installing image files"
+	echo "For standalone -Installing image files"
 	./get_fs_data.sh
 
 	echo "Installing nginx certs and DINA favicon"
