@@ -6,7 +6,6 @@ combined.pem
 key.pem
 index.html
 wildfly-custom/customization/commands.cli.org
-mysql_media-autoload/nf_media-201600203.sql
 
 #directories
 nginx-certs
@@ -17,18 +16,11 @@ mysql_nf-datadir
 mysql_media-datadir
 
 srv/data/media_files/
-srv/deployments/naturalist.war.failed
-srv/deployments/naturalist.war.deployed
-srv/deployments/naturalist-mediaserver.war
-srv/deployments/naturalist-mediaserver.war.deployed
-srv/deployments/naturalist.war.undeployed
-srv/deployments/mediaserver-nf.ear
-srv/deployments/mediaserver-nf.ear.failed
-srv/deployments/mediaserver-nf.ear.undeployed
-srv/data/nf-mediafiles.tgz
-srv/deployments/mediaserver-nf.ear.deployed
-srv/deployments/naturalist-mediaserver-20160216.war
-srv/deployments/naturalist-mediaserver-20160216.war.undeployed
-srv/data/taxonpages_v2.sql.old
-mysql_nf-autoload/taxonpages_v2.sql
-srv/deployments/naturalist.war
+srv/deployments/*.war
+srv/deployments/*.war.failed
+srv/deployments/*.war.deployed
+srv/deployments/*.war.undeployed
+srv/data/*.tgz
+srv/data/*.sql
+srv/data/*.sql.old
+mysql_nf-autoload/*.sql
