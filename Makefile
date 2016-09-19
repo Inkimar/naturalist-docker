@@ -6,21 +6,24 @@ clean: stop rm
 	sudo chown -R $(ME):$(ME) mysql_nf-datadir mysql_nf-shr mysql_nf-autoload mysql_nf-conf.d
 
 init:
-	echo "Retrieving databases - for naturalist and mediaserver"
+	echo "Retrieving databases - for the naturalist"
 	./get_naturalist-db_schema.sh
-	echo "set up database taxonpages_v2"
+	echo "set up the database (taxonpages_v2)"
 	docker-compose up -d db.nf
 	echo "Installing app file (.war)"
 	./get_enhanced-naturalist_war.sh
-	echo "For standalone -Installing image files"
-	./get_occurance-map_files.sh
+	#echo "For standalone -Installing the maps"
+	#./get_occurance-map_files.sh
 	echo "Installing nginx certs and DINA favicon"
 	./get_nginx_certs.sh
 	
-build:
+build: fetch-sh
+	echo "Installing app file (.war)"
+	./get_enhanced-naturalist_war.sh
+	echo "builds"
 	docker-compose build --no-cache as
 
-fetch:
+fetch-sh:
 	@curl --progress -L -s -o wait-for-it.sh \
 		https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh && \
 		chmod +x wait-for-it.sh
@@ -35,9 +38,6 @@ up:
 
 	#docker exec -it dwsystem_as_1 bash -c 'bin/jboss-cli.sh --connect --command="deploy releases/naturalist.war"'
 
-	#@echo "Temporary deployment using file copy"
-	#sudo rm -f srv/deployments/*
-	#sudo cp srv/releases/naturalist_connected_20160809.war srv/deployments/
 
 	docker-compose up -d
 
