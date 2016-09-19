@@ -27,8 +27,6 @@ RUN rm -rf /opt/jboss/wildfly/standalone/configuration/standalone_xml_history
 RUN chown -R jboss:jboss /opt/jboss/wildfly/
 
 USER jboss
-#ADD naturalist.war /opt/jboss/wildfly/releases/
-#COPY naturalist.war /opt/jboss/wildfly/standalone/deployments/
 ADD naturalist.war /opt/jboss/wildfly/standalone/deployments/
 
 USER root 
