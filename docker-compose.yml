@@ -27,7 +27,7 @@ fs_naturalist:
     - ./srv/log:/opt/jboss/wildfly/nf-logs
 
 as:
-  build: ./wildfly-custom
+  image: dina/naturalist:v0.1
   volumes_from:
     - fs_naturalist
   links:

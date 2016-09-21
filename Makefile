@@ -1,5 +1,6 @@
 ME=$(USER)
-all: build init up
+#all: build init up
+all: init up
 
 clean: stop rm
 	sudo chown -R $(ME):$(ME) nginx-conf nginx-html nginx-certs nginx-logs
@@ -13,7 +14,7 @@ init:
 	echo "Installing app file (.war)"
 	./get_enhanced-naturalist_war.sh
 	#echo "For standalone -Installing the maps"
-	./get_occurance-map_files.sh
+	#./get_occurance-map_files.sh
 	echo "Installing nginx certs and DINA favicon"
 	./get_nginx_certs.sh
 	
@@ -21,7 +22,8 @@ build: fetch-sh
 	echo "Installing app file (.war)"
 	./get_enhanced-naturalist_war.sh
 	echo "builds"
-	docker-compose build --no-cache as
+	#docker-compose build --no-cache as
+	@docker build -t dina/naturalist:v0.1 wildfly-custom
 
 fetch-sh:
 	@curl --progress -L -s -o wait-for-it.sh \
@@ -29,6 +31,9 @@ fetch-sh:
 		chmod +x wait-for-it.sh
 	@test -f wildfly-custom/wait-for-it.sh || \
 		mv wait-for-it.sh wildfly-custom/
+
+release:
+	docker push  dina/naturalist:v0.1
 
 up:
 	docker-compose up -d db.nf
