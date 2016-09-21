@@ -13,7 +13,7 @@ init:
 	echo "Installing app file (.war)"
 	./get_enhanced-naturalist_war.sh
 	#echo "For standalone -Installing the maps"
-	#./get_occurance-map_files.sh
+	./get_occurance-map_files.sh
 	echo "Installing nginx certs and DINA favicon"
 	./get_nginx_certs.sh
 	
