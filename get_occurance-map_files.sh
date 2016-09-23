@@ -2,8 +2,12 @@
 
 #The map-files
 FILE=maps.tgz
-SRC=/media/buffalo/dina-data/naturalist/maps/maps.tgz
+SRC=https://archive.org/download/naturalist_maps/$FILE
 DST=srv/data
-test -f $DST/$FILE || cp $SRC $DST
-cd $DST
-tar xvfz $FILE
+
+test -f $FILE ||  (wget $SRC && tar -xvf $FILE -C $DST)
+
+
+#buffalo
+#FILE=maps.tgz
+#SRC=/media/buffalo/dina-data/naturalist/maps/$FILE
