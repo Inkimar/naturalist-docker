@@ -22,7 +22,7 @@ db.nf:
 fs_naturalist:
   image: tianon/true
   volumes:
-    - ./srv/data:/opt/data
+    - ./srv/data:/opt/data/nf
     - ./srv/releases:/opt/jboss/wildfly/releases
     - ./srv/log:/opt/jboss/wildfly/nf-logs
 
