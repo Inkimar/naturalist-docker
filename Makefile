@@ -11,10 +11,10 @@ init:
 	./get_naturalist-db_schema.sh
 	echo "set up the database (taxonpages_v2)"
 	docker-compose up -d db.nf
-	echo "Installing app file (.war)"
-	./get_enhanced-naturalist_war.sh
-	#echo "For standalone -Installing the maps"
-	#./get_occurance-map_files.sh
+	#echo "Installing app file (.war)"
+	#./get_enhanced-naturalist_war.sh
+	echo "For standalone -Installing the maps"
+	./get_occurance-map_files.sh
 	echo "Installing nginx certs and DINA favicon"
 	./get_nginx_certs.sh
 	
