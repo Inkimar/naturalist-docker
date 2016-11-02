@@ -1,6 +1,10 @@
-# dw-system
+# naturalist-docker , branch  naturalist-integrated
 
-Integration project with DINA-Web applications including for example The Naturalist, The Media Server, Loan, Inventory, DNA Key and Naturarv
+This is the naturalist integrated with the mediaserver, hence the name of the branch 'naturalist-integrated'.
+
+# dependencies
+start up the mediaserver ( branch media_enhanced , https://github.com/DINA-Web/media-docker/tree/media_enhanced )
+
 
 # Usage
 

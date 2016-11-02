@@ -1,1 +1,1 @@
-docker exec -it dwsystem_as_1 bash
+docker exec -it naturalistdocker_as_1 bash

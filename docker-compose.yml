@@ -9,46 +9,35 @@ fs_db.nf:
 fs_ws:
   image: tianon/true
   volumes:
-#    - ./nginx-html:/usr/share/nginx/html:z
     - ./nginx-conf:/etc/nginx/conf.d:rw
     - ./nginx-certs:/etc/nginx/ssl:rw
     - ./nginx-logs:/etc/nginx/logs:rw
 
 db.nf:
   image: mysql:5.6
-  environment:
-    - TZ=Europe/Stockholm
-    - MYSQL_ROOT_PASSWORD=supersecret
-    - MYSQL_DATABASE=taxonpages_v2
-    - MYSQL_USER=naturalist
-    - MYSQL_PASSWORD=passw0rd12
+  env_file: .env
   volumes_from:
     - fs_db.nf
 
 fs_naturalist:
   image: tianon/true
   volumes:
-    - ./srv/data:/opt/data
-    - ./srv/deployments:/opt/jboss/wildfly/standalone/deployments:z
+    - ./srv/data:/opt/data/nf
     - ./srv/releases:/opt/jboss/wildfly/releases
     - ./srv/log:/opt/jboss/wildfly/nf-logs
 
 as:
-  build: ./wildfly-custom
+  #build: ./wildfly-custom
+  image: dina/naturalist:v0.1
   volumes_from:
     - fs_naturalist
   links:
     - db.nf:dbnf
- # external_links:
- #  - dwmedia_web_1:beta-media.dina-web.net
 
 ws:
   image: nginx
   environment:
    - VIRTUAL_HOST=beta-naturforskaren.dina-web.net
-   #- VIRTUAL_PORT=443
-   #- VIRTUAL_PROTO=https
-   #- CERT_NAME=shared
   volumes_from:
     - fs_ws
   links:
