@@ -28,7 +28,8 @@ fs_naturalist:
 
 as:
   #build: ./wildfly-custom
-  image: dina/naturalist:v0.1
+  #image: dina/naturalist:v0.1
+  image: dina/naturalist_enhanced:v0.1
   volumes_from:
     - fs_naturalist
   links:
