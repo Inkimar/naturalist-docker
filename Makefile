@@ -1,4 +1,6 @@
 ME=$(USER)
+DOCKERHUB_VER=v0.1
+
 all: build init up
 
 
@@ -20,16 +22,13 @@ build: fetch-sh
 	./get_enhanced-naturalist_war.sh
 	echo "builds"
 	#docker-compose build --no-cache as
-	@docker build -t dina/naturalist:v0.1 wildfly-custom
-
-	#echo "For standalone -Installing image files"
-	#./get_fs_data.sh
+	@docker build -t dina/naturalist_enhanced:${DOCKERHUB_VER} wildfly-custom
 
 	echo "Installing nginx certs and DINA favicon"
 	./get_nginx_certs.sh
 
-build:
-	docker-compose build --no-cache as
+#build:
+#	docker-compose build --no-cache as
 
 fetch-sh:
 	@curl --progress -L -s -o wait-for-it.sh \
@@ -39,7 +38,7 @@ fetch-sh:
 		mv wait-for-it.sh wildfly-custom/
 
 release:
-	docker push  dina/naturalist:v0.1
+	docker push  dina/naturalist_enhanced:${DOCKERHUB_VER}
 
 
 up:
