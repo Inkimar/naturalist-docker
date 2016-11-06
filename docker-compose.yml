@@ -10,45 +10,39 @@ fs_naturalist:
   image: tianon/true
   volumes:
     - ./srv/data:/opt/data
-    - ./srv/deployments:/opt/jboss/wildfly/standalone/deployments:z
-
-fs_ws:
-  image: tianon/true
-  volumes:
-    - ./nginx-html:/usr/share/nginx/html:z
-    - ./nginx-conf:/etc/nginx/conf.d:z
-    - ./nginx-certs:/etc/nginx/ssl:z
-    - ./nginx-logs:/etc/nginx/logs:z
+    - ./srv/log:/opt/jboss/wildfly/standalone/log
 
 db:
-  image: mysql:5.5
-  environment:
-    - TZ=Europe/Stockholm
-    - MYSQL_ROOT_PASSWORD=supersecret
-    - MYSQL_DATABASE=taxonpages_v2
-    - MYSQL_USER=naturalist
-    - MYSQL_PASSWORD=passw0rd12
-  ports:
-    - "13306:3306"
+  image: mysql:5.6
+  env_file: .env
   volumes_from:
     - fs_db
 
 as:
-  build: ./wildfly-custom
-  ports:
-    - "8080"
-    - "9990"
+  #build: ./wildfly-custom
+  image: dina/naturalist:v0.2
+  environment:
+   - VIRTUAL_HOST=naturforskaren.dina-web.net
+   - VIRTUAL_PORT=8080
   volumes_from:
     - fs_naturalist
   links:
     - db
 
-ws:
-  image: nginx
-  ports:
-    - "80:80"
-    - "443:443"
-  volumes_from:
-    - fs_ws
-  links:
-    - as
+#fs_ws:
+#  image: tianon/true
+#  volumes:
+#    - ./nginx-html:/usr/share/nginx/html:z
+#    - ./nginx-conf:/etc/nginx/conf.d:z
+#    - ./nginx-certs:/etc/nginx/ssl:z
+#    - ./nginx-logs:/etc/nginx/logs:z
+
+#ws:
+#  image: nginx
+#  ports:
+#    - "80:80"
+#    - "443:443"
+#  volumes_from:
+#    - fs_ws
+#  links:
+#    - as

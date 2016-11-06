@@ -1,7 +1,8 @@
 #!/bin/bash
 
-SRC=/media/buffalo/dina-data/naturalist/taxonpages_v2.sql
-cp $SRC mysql-autoload
+BASE=/media/buffalo/dina-data/naturalist
+ARTIFACT=taxonpages_v2.sql
+DST=mysql-autoload
 
-#SRC=/media/buffalo/dina-data/naturalist/media.sql
-#cp $SRC mysql-autoload
+echo " if there is no artifact -(cp from Buffalo)-> ${BASE}/${ARTIFACT}  ${DST}"
+test -f ${DST}/${ARTIFACT} || cp ${BASE}/${ARTIFACT}  ${DST}
