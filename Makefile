@@ -19,7 +19,8 @@ up: db
 	#firefox https://naturforskaren.dina-web.net/naturalist/
 
 build:
-	#docker-compose build --no-cache as
+	echo "Installing app file (.war)"
+	./get_war.sh
 	@cd wildfly-custom && test -f wait-for-it.sh || \
 		(wget https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh && \
 	chmod +x wait-for-it.sh)
@@ -31,12 +32,11 @@ release:
 	@docker push dina/naturalist:${DOCKERHUB_VER}
 
 init:
-
 	echo "Installing image files"
 	./get_fs_data.sh
 
-	echo "Installing app file (.war)"
-	./get_war.sh
+	#echo "Installing app file (.war)"
+	#./get_war.sh
 
 	echo "Installing nginx certs and DINA favicon"
 	./get_nginx_certs.sh
