@@ -19,7 +19,6 @@ init:
 	./get_nginx_certs.sh
 	
 build: fetch-sh
-	#docker-compose build --no-cache as
 	echo "fetching app file (.war)"
 	./get_enhanced-naturalist_war.sh
 	echo "builds"	
@@ -39,15 +38,11 @@ fetch-sh:
 release:
 	docker push  dina/naturalist_enhanced:${DOCKERHUB_VER}
 
-
 up:
 	docker-compose up -d db.nf
 	sleep 15
 	docker-compose up -d as
 	sleep 10
-
-	#docker exec -it dwsystem_as_1 bash -c 'bin/jboss-cli.sh --connect --command="deploy releases/naturalist.war"'
-
 
 	docker-compose up -d
 
