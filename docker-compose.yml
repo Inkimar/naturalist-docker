@@ -18,8 +18,7 @@ db:
   volumes_from:
     - fs_db
 
-as:
-  #build: ./wildfly-custom
+asvanilla:
   image: dina/naturalist:v0.2
   environment:
    - VIRTUAL_HOST=naturforskaren.dina-web.net
