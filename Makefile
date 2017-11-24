@@ -1,4 +1,6 @@
-ME=$(USER)
+#!make
+##inkimar/naturalist-docker
+
 DOCKERHUB_VER=v0.1
 
 #all: build init up
@@ -15,8 +17,6 @@ init:
 	#./get_enhanced-naturalist_war.sh
 	#echo "For standalone -Installing the maps"
 	#./get_occurance-map_files.sh
-	echo "Installing nginx certs and DINA favicon"
-	./get_nginx_certs.sh
 	
 build: fetch-sh
 	echo "fetching app file (.war)"
@@ -46,23 +46,21 @@ up:
 
 	docker-compose up -d
 
-	@echo "Local:: Please make sure you have beta-naturforskaren.dina-web.net  in your /etc/hosts!"
-	sleep 15
 
-	#echo "Opening app!"
-	#firefox https://beta-naturforskaren.dina-web.net/nf-naturalist/&
+down:
+	@docker-compose down
 
-
-clean: stop rm
-	sudo chown -R $(ME):$(ME) nginx-conf nginx-html nginx-certs nginx-logs
-	sudo chown -R $(ME):$(ME) mysql_nf-datadir mysql_nf-shr mysql_nf-autoload mysql_nf-conf.d
 
 stop:
-	docker-compose stop
+	@docker-compose stop
 
 rm:
-	docker-compose rm -vf
+	@docker-compose rm -vf
 
 ps: 
-	docker-compose ps
+	@docker-compose ps
 
+browser-test:
+	@echo "Local:: Please make sure you have beta-naturforskaren.dina-web.net  in your /etc/hosts!"
+	@echo "Opening app!"
+	xdg-open https://beta-naturforskaren.dina-web.net/nf-naturalist/&
