@@ -1,17 +1,10 @@
 fs_db.nf:
   image: tianon/true
   volumes:
-    - ./mysql_nf-datadir:/var/lib/mysql:z
-    - ./mysql_nf-shr:/shr:z
     - ./mysql_nf-autoload:/docker-entrypoint-initdb.d:ro
-    - ./mysql_nf-conf.d:/etc/mysql/conf.d:z
-
-fs_ws:
-  image: tianon/true
-  volumes:
-    - ./nginx-conf:/etc/nginx/conf.d:rw
-    - ./nginx-certs:/etc/nginx/ssl:rw
-    - ./nginx-logs:/etc/nginx/logs:rw
+    - ./mysql_nf-datadir:/var/lib/mysql:z
+   # - ./mysql_nf-shr:/shr:z
+   # - ./mysql_nf-conf.d:/etc/mysql/conf.d:z
 
 db.nf:
   image: mysql:5.6
@@ -28,16 +21,25 @@ fs_naturalist:
 
 as:
   image: dina/naturalist_enhanced:v0.1
+  environment:
+   - VIRTUAL_HOST=beta-naturforskaren.dina-web.net
   volumes_from:
     - fs_naturalist
   links:
     - db.nf:dbnf
 
-ws:
-  image: nginx
-  environment:
-   - VIRTUAL_HOST=beta-naturforskaren.dina-web.net
-  volumes_from:
-    - fs_ws
-  links:
-    - as
+#fs_ws:
+#  image: tianon/true
+#  volumes:
+#    - ./nginx-conf:/etc/nginx/conf.d:rw
+#    - ./nginx-certs:/etc/nginx/ssl:rw
+#    - ./nginx-logs:/etc/nginx/logs:rw
+
+#ws:
+#  image: nginx
+#  environment:
+#   - VIRTUAL_HOST=beta-naturforskaren.dina-web.net
+#  volumes_from:
+#    - fs_ws
+#  links:
+#    - as
