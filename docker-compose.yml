@@ -5,20 +5,17 @@ fs_db.nf:
     - ./mysql_nf-datadir:/var/lib/mysql:z
    # - ./mysql_nf-shr:/shr:z
    # - ./mysql_nf-conf.d:/etc/mysql/conf.d:z
-
 db.nf:
   image: mysql:5.6
   env_file: .env
   volumes_from:
     - fs_db.nf
-
 fs_naturalist:
   image: tianon/true
   volumes:
     - ./srv/data:/opt/data/nf
     - ./srv/releases:/opt/jboss/wildfly/releases
     - ./srv/log:/opt/jboss/wildfly/nf-logs
-
 as:
   image: dina/naturalist_enhanced:v0.1
   environment:
@@ -27,19 +24,3 @@ as:
     - fs_naturalist
   links:
     - db.nf:dbnf
-
-#fs_ws:
-#  image: tianon/true
-#  volumes:
-#    - ./nginx-conf:/etc/nginx/conf.d:rw
-#    - ./nginx-certs:/etc/nginx/ssl:rw
-#    - ./nginx-logs:/etc/nginx/logs:rw
-
-#ws:
-#  image: nginx
-#  environment:
-#   - VIRTUAL_HOST=beta-naturforskaren.dina-web.net
-#  volumes_from:
-#    - fs_ws
-#  links:
-#    - as
