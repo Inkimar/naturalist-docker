@@ -1,5 +1,5 @@
 #!make
-##inkimar/naturalist-docker
+##inkimar/naturalist-docker [branch=naturalist-integrated]
 
 DOCKERHUB_VER=v0.1
 
@@ -19,8 +19,8 @@ init:
 	#./get_occurance-map_files.sh
 	
 build: fetch-sh
-	echo "fetching app file (.war)"
-	./get_enhanced-naturalist_war.sh
+	#echo "fetching app file (.war)"
+	#./get_enhanced-naturalist_war.sh
 	echo "builds"	
 	@docker build -t dina/naturalist_enhanced:${DOCKERHUB_VER} wildfly-custom
 
