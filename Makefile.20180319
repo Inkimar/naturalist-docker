@@ -1,0 +1,28 @@
+#!make
+##inkimar/naturalist-docker [branch=naturalist-integrated]
+
+
+up:
+	docker-compose up -d db.nf
+	sleep 15
+	docker-compose up -d as
+	sleep 10
+
+	docker-compose up -d
+
+
+down:
+	@docker-compose down
+
+
+stop:
+	@docker-compose stop
+
+rm:
+	@docker-compose rm -vf
+
+ps: 
+	@docker-compose ps
+
+browser-test:
+	xdg-open https://beta-naturforskaren.dina-web.net/nf-naturalist/&
