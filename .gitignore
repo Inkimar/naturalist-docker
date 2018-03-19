@@ -32,3 +32,5 @@ srv/log/naturalist-web.log
 wait-for-it.sh
 wildfly-custom/naturalist_mediaserver.war
 wildfly-custom/wait-for-it.sh
+
+certs/**
