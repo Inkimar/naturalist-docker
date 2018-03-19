@@ -17,7 +17,7 @@ fs_naturalist:
     - ./srv/releases:/opt/jboss/wildfly/releases
     - ./srv/log:/opt/jboss/wildfly/nf-logs
 as:
-  image: dina/naturalist_enhanced:v0.1
+  image: dina/naturalist_enhanced:v8.1.1
   environment:
    - VIRTUAL_HOST=beta-naturforskaren.dina-web.net
   volumes_from:
