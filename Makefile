@@ -30,3 +30,6 @@ browse:
 	firefox https://beta-naturforskaren.dina-web.net/nf-naturalist/ &
 	firefox https://beta-media.dina-web.net/MediaServerRestEasy/ &
 
+dump-media-schema:
+	docker exec naturalistdocker_dbmedia_1 \
+		mysqldump -u mediaserver -pmediaserver --no-data nf_media > nf_media_schema.sql
