@@ -46,6 +46,8 @@ services:
     volumes:
       - vol_dbnf:/var/lib/mysql
       - ./initdbnf:/docker-entrypoint-initdb.d
+    ports:
+      - 3306:3306
     healthcheck:
       test: "/usr/bin/mysql --user=$MYSQL_USER --password=$MYSQL_PASSWORD --execute \"SHOW DATABASES;\""
       interval: 3s
