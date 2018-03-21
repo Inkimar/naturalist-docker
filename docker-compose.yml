@@ -70,23 +70,23 @@ services:
       retries: 5
 
   as:
-    image: dina/naturalist_enhanced:v8.1.1
-    command: /wait-for-it.sh dbnf:3306 -s -t 300 -- /opt/jboss/wildfly/bin/standalone.sh -b 0.0.0.0 -bmanagement 0.0.0.0
+    image: dina/naturalist_enhanced:v8.1.2
+    #command: /wait-for-it.sh dbnf:3306 -s -t 300 -- /opt/jboss/wildfly/bin/standalone.sh -b 0.0.0.0 -bmanagement 0.0.0.0
     environment:
       - VIRTUAL_HOST=beta-naturforskaren.dina-web.net
-#      - VIRTUAL_HOST=naturforskaren.se
+#      - VIRTUAL_HOST=beta-naturforskaren.se
     depends_on:
       - dbnf
 
   media:
-    image: dina/media_enhanced:v8.1.1
-    command: /wait-for-it.sh dbmedia:3306 -s -t 300 -- /opt/jboss/wildfly/bin/standalone.sh -b 0.0.0.0 -bmanagement 0.0.0.0
+    image: dina/media_enhanced:v8.1.3
+    #command: /wait-for-it.sh dbmedia:3306 -s -t 300 -- /opt/jboss/wildfly/bin/standalone.sh -b 0.0.0.0 -bmanagement 0.0.0.0
     environment:
       - VIRTUAL_HOST=beta-media.dina-web.net
-#      - VIRTUAL_HOST=media.naturforskaren.se
+#      - VIRTUAL_HOST=beta-media.naturforskaren.se
       - VIRTUAL_PORT=8080
     volumes:
       - ./srv/media:/opt/data/media
-      - ./wait-for-it.sh:/wait-for-it.sh
+#      - ./wait-for-it.sh:/wait-for-it.sh
     depends_on:
       - dbmedia 
