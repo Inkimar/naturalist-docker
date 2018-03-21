@@ -47,6 +47,7 @@ ENTRYPOINT ["/tini", "--"]
 
 #sparas direkt under root 
 COPY wait-for-it.sh /
+RUN chmod +x /wait-for-it.sh
 CMD /wait-for-it.sh dbnf:3306 -q --strict -- /opt/jboss/wildfly/bin/standalone.sh -b 0.0.0.0 -bmanagement 0.0.0.0
 #CMD ["/opt/jboss/wildfly/bin/standalone.sh", "-b", "0.0.0.0", "-bmanagement", "0.0.0.0"]
 
