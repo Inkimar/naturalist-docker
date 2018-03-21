@@ -10,8 +10,8 @@ init:
 	#cd srv && tar xvfz media-files.tgz && rm media-files.tgz
 	echo "Retrieving databases - for naturalist ..."
 	#scp naturalist:backups/taxonpages_v2.sql ./initdbnf/taxonpages_v2.sql
-	gunzip /media/buffalo/dina-backups/dina-db/mysql-taxonpages_v2.2018_03_20.sql.gz .
-	cp mysql-taxonpages_v2.2018_03_20.sql initdbnf/taxonpages_v2.sql
+	cp /media/buffalo/dina-backups/dina-db/mysql-taxonpages_v2.2018_03_20.sql.gz .
+	gunzip mysql-taxonpages_v2.2018_03_20.sql.gz && mv mysql-taxonpages_v2.2018_03_20.sql initdbnf/taxonpages_v2.sql
 	#scp admin@naturalist.nrm.se:backups/mysql-taxonpages_v2.2018_03_19.sql.gz .
 	#gunzip mysql-taxonpages_v2.2018_03_19.sql.gz
 	#mv mysql-taxonpages_v2.2018_03_19.sql initdbnf/taxonpages_v2.sql
