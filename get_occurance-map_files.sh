@@ -4,7 +4,7 @@ SRC=https://archive.org/download/maps.tar/$FILE
 DST=srv/data
 
 echo "fetching  ${FILE}, for the naturalist-enhanced"
-test -f $FILE ||  (wget $SRC && tar -xvf $FILE -C $DST)
+test -f $FILE ||  (wget $SRC && tar -xvf $FILE -C $DST) && rm $FILE
 
 
 #buffalo

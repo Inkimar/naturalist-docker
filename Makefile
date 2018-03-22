@@ -8,6 +8,7 @@ init:
 	#echo "Retrieving media files"
 	#scp naturalist:backups/media-files.tgz ./srv
 	#cd srv && tar xvfz media-files.tgz && rm media-files.tgz
+	#./get_occurance-map_files.sh
 	echo "Retrieving databases - for naturalist ..."
 	#scp naturalist:backups/taxonpages_v2.sql ./initdbnf/taxonpages_v2.sql
 	cp /media/buffalo/dina-backups/dina-db/mysql-taxonpages_v2.2018_03_20.sql.gz .
@@ -19,7 +20,7 @@ init:
 	#scp naturalist:backups/mediaserver_20180319.sql ./initdbmedia/nf_media.sql
 	#scp naturalist:backups/update-admin_config.sql ./initdbmedia/update-admin_config.sql
 	#cp nf_media_schema.sql ./initdbmedia/nf_media.sql
-	scp naturalist:backups/update-admin_config.sql ./initdbmedia/update-admin_config.sql
+	cp update-admin_config.sql ./initdbmedia/update-admin_config.sql
 
 clean:
 	rm -rf initdbmedia initdbnf #srv
