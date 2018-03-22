@@ -77,6 +77,7 @@ services:
 #      - VIRTUAL_HOST=beta-naturforskaren.se
     volumes:
       - ./settings.properties:/opt/jboss/wildfly/modules/se/nrm/bio/configuration/main/settings.properties
+      - ./srv/log:/opt/jboss/wildfly/nf-logs
     depends_on:
       - dbnf
 
