@@ -87,6 +87,5 @@ services:
       - VIRTUAL_PORT=8080
     volumes:
       - ./srv/media:/opt/data/media
-#      - ./wait-for-it.sh:/wait-for-it.sh
     depends_on:
       - dbmedia 
