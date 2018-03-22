@@ -37,3 +37,11 @@ browse:
 dump-media-schema:
 	docker exec naturalistdocker_dbmedia_1 \
 		mysqldump -u mediaserver -pmediaserver --no-data nf_media > nf_media_schema.sql
+
+dump-media-data:
+	docker exec naturalistdocker_dbmedia_1 \
+		mysqldump -u mediaserver -pmediaserver nf_media > nf_media.sql
+
+show-mediadb-queries:
+	docker exec -it naturalistdocker_dbmedia_1 \
+		mysqladmin -u root -psupersecret -h 127.0.0.1 -i 1 --verbose processlist;
