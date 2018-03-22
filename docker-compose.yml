@@ -75,6 +75,8 @@ services:
     environment:
       - VIRTUAL_HOST=beta-naturforskaren.dina-web.net
 #      - VIRTUAL_HOST=beta-naturforskaren.se
+    volumes:
+      - ./settings.properties:/opt/jboss/wildfly/modules/se/nrm/bio/configuration/main/settings.properties
     depends_on:
       - dbnf
 
