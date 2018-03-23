@@ -7,6 +7,7 @@ init:
 	echo "Dont forget to put your certs file in the certs directory now!"
 	#echo "Retrieving media files"
 	#scp naturalist:backups/media-files.tgz ./srv
+	cp /media/buffalo/ingimar/media-images.tar . && tar xvf media-images.tar && rm media-images.tar
 	#cd srv && tar xvfz media-files.tgz && rm media-files.tgz
 	#./get_occurance-map_files.sh
 	echo "Retrieving databases - for naturalist ..."
@@ -19,7 +20,7 @@ init:
 	echo "... and for mediaserver"
 	#scp naturalist:backups/mediaserver_20180319.sql ./initdbmedia/nf_media.sql
 	#scp naturalist:backups/update-admin_config.sql ./initdbmedia/update-admin_config.sql
-	#cp nf_media_schema.sql ./initdbmedia/nf_media.sql
+	cp nf_media.sql ./initdbmedia/nf_media.sql
 	cp update-admin_config.sql ./initdbmedia/update-admin_config.sql
 
 clean:
@@ -33,7 +34,7 @@ down:
 
 browse:
 	firefox https://beta-naturforskaren.dina-web.net/nf-naturalist/ &
-	firefox https://beta-media.dina-web.net/MediaServerRestEasy/ &
+	firefox https://beta-media.dina-web.net/MediaServerResteasy/ &
 
 dump-media-data:
 	docker exec naturalistdocker_dbmedia_1 \
