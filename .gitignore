@@ -13,6 +13,8 @@ nginx-logs
 mysql_nf-datadir
 mysql_media-datadir
 
+#
+*.tar
 srv/data/media_files/
 srv/deployments/*.war
 srv/deployments/*.war.failed
