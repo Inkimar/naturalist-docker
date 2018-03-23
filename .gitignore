@@ -2,8 +2,6 @@
 *.sh~
 .gitignore~
 .gitignore.swp
-combined.pem
-key.pem
 index.html
 wildfly-custom/customization/commands.cli.org
 
