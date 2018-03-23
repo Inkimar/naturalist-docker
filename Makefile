@@ -3,11 +3,11 @@
 all: up
 
 init:
-	mkdir -p initdbmedia initdbnf srv certs
+	mkdir -p initdbmedia initdbnf #srv certs
 	echo "Dont forget to put your certs file in the certs directory now!"
 	#echo "Retrieving media files"
 	#scp naturalist:backups/media-files.tgz ./srv
-	cp /media/buffalo/ingimar/media-images.tar . && tar xvf media-images.tar && rm media-images.tar
+	cp /media/buffalo/ingimar/media-images.tar . && tar xvf media-images.tar #&& rm media-images.tar
 	#cd srv && tar xvfz media-files.tgz && rm media-files.tgz
 	#./get_occurance-map_files.sh
 	echo "Retrieving databases - for naturalist ..."
@@ -17,7 +17,7 @@ init:
 	#scp admin@naturalist.nrm.se:backups/mysql-taxonpages_v2.2018_03_19.sql.gz .
 	#gunzip mysql-taxonpages_v2.2018_03_19.sql.gz
 	#mv mysql-taxonpages_v2.2018_03_19.sql initdbnf/taxonpages_v2.sql
-	echo "... and for mediaserver"
+	echo "... and for mediaserver (2 files)"
 	#scp naturalist:backups/mediaserver_20180319.sql ./initdbmedia/nf_media.sql
 	#scp naturalist:backups/update-admin_config.sql ./initdbmedia/update-admin_config.sql
 	cp nf_media.sql ./initdbmedia/nf_media.sql
@@ -35,6 +35,9 @@ down:
 browse:
 	firefox https://beta-naturforskaren.dina-web.net/nf-naturalist/ &
 	firefox https://beta-media.dina-web.net/MediaServerResteasy/ &
+
+count-files:
+	find srv/media/ -type f | wc -l
 
 dump-media-data:
 	docker exec naturalistdocker_dbmedia_1 \
