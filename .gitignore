@@ -30,6 +30,5 @@ mysql_nf-autoload/*.sql
 maps.tar.gz
 srv/log/naturalist-web.log
 wildfly-custom/naturalist_mediaserver.war
-wildfly-custom/wait-for-it.sh
 
 certs/**
