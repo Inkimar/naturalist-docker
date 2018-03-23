@@ -34,7 +34,7 @@ down:
 
 browse:
 	firefox https://beta-naturforskaren.dina-web.net/nf-naturalist/ &
-	firefox https://beta-media.dina-web.net/MediaServerResteasy/ &
+	#firefox https://beta-media.dina-web.net/MediaServerResteasy/ &
 
 count-files:
 	find srv/media/ -type f | wc -l
