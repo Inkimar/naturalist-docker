@@ -3,11 +3,11 @@
 all: init up
 
 init:
-	mkdir -p initdbmedia initdbnf srv certs
+	mkdir -p initdbmedia initdbnf certs srv
 	echo "Dont forget to put your certs file in the certs directory now!"
 	#echo "Retrieving media files"
 	#scp naturalist:backups/media-files.tgz ./srv
-	cp /media/buffalo/ingimar/media-images.tar . && tar xvf media-images.tar && rm media-images.tar
+	cp /media/buffalo/ingimar/media-images-20180327.tar . &&  tar xvf media-images-20180327.tar && media-images-20180327.tar
 	#cd srv && tar xvfz media-files.tgz && rm media-files.tgz
 	#./get_occurance-map_files.sh
 	echo "Retrieving databases - for naturalist ..."
