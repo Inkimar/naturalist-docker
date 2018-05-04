@@ -6,21 +6,6 @@ volumes:
 
 services:
 
-  dnsmasq:
-    image: andyshinn/dnsmasq:2.76
-    command: --log-facility=- --server=127.0.0.11 --server=193.10.57.11 --server=8.8.8.8 --server=172.16.0.72 --server=172.16.0.7 --neg-ttl=3600 --cache-size=1000 --max-cache-ttl=3600 --min-cache-ttl=3600 --all-servers
-    cap_add: 
-      - NET_ADMIN 
-    ports:
-      - 172.17.0.1:53:53/tcp
-      - 172.17.0.1:53:53/udp
-    links:
-      - proxy:beta-naturforskaren.dina-web.net
-      - proxy:beta-media.dina-web.net
-    depends_on:
-      - as
-      - media
-
   proxy:
     image: jwilder/nginx-proxy:alpine
     ports:
@@ -33,6 +18,7 @@ services:
     environment:
       - NGINX_MAX_BODY_SZ=100m
     command: /bin/bash -c "envsubst < /etc/nginx/conf.d/site.template > /etc/nginx/conf.d/bioatlas.conf && forego start -r"
+
 
   dbnf:
     image: mysql:5.6
@@ -76,8 +62,9 @@ services:
     image: dina/naturalist_enhanced:v8.1.1
     command: /wait-for-it.sh dbnf:3306 -s -t 300 -- /opt/jboss/wildfly/bin/standalone.sh -b 0.0.0.0 -bmanagement 0.0.0.0
     environment:
-      - VIRTUAL_HOST=beta-naturforskaren.dina-web.net
-#      - VIRTUAL_HOST=naturforskaren.se
+           - VIRTUAL_HOST=beta.naturforskaren.se
+            # - VIRTUAL_HOST=beta-naturforskaren.dina-web.net
+            # - VIRTUAL_HOST=naturforskaren.se
     depends_on:
       - dbnf
 
@@ -94,3 +81,7 @@ services:
     depends_on:
       - dbmedia 
 
+        #networks:
+        #default:
+        #external:
+        #name: proxydocker_default 
