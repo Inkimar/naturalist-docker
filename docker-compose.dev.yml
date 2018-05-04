@@ -78,6 +78,8 @@ services:
     environment:
       - VIRTUAL_HOST=beta-naturforskaren.dina-web.net
 #      - VIRTUAL_HOST=naturforskaren.se
+#    volumes:
+#          - ./srv/data:/opt/data/nf
     depends_on:
       - dbnf
 
