@@ -1,0 +1,96 @@
+version: "3.1"
+
+volumes:
+  vol_dbnf:
+  vol_dbmedia:
+
+services:
+
+  dnsmasq:
+    image: andyshinn/dnsmasq:2.76
+    command: --log-facility=- --server=127.0.0.11 --server=193.10.57.11 --server=8.8.8.8 --server=172.16.0.72 --server=172.16.0.7 --neg-ttl=3600 --cache-size=1000 --max-cache-ttl=3600 --min-cache-ttl=3600 --all-servers
+    cap_add: 
+      - NET_ADMIN 
+    ports:
+      - 172.17.0.1:53:53/tcp
+      - 172.17.0.1:53:53/udp
+    links:
+      - proxy:beta-naturforskaren.dina-web.net
+      - proxy:beta-media.dina-web.net
+    depends_on:
+      - as
+      - media
+
+  proxy:
+    image: jwilder/nginx-proxy:alpine
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ./certs:/etc/nginx/certs
+      - ./site.template:/etc/nginx/conf.d/site.template
+    environment:
+      - NGINX_MAX_BODY_SZ=100m
+    command: /bin/bash -c "envsubst < /etc/nginx/conf.d/site.template > /etc/nginx/conf.d/bioatlas.conf && forego start -r"
+
+  dbnf:
+    image: mysql:5.6
+    environment:
+      - TZ=Europe/Stockholm
+      - MYSQL_ROOT_PASSWORD=supersecret
+      - MYSQL_DATABASE=taxonpages_v2
+      - MYSQL_USER=naturalist
+      - MYSQL_PASSWORD=passw0rd12
+    volumes:
+      - vol_dbnf:/var/lib/mysql
+      - ./initdbnf:/docker-entrypoint-initdb.d
+    ports:
+      - 3306:3306
+    healthcheck:
+      test: "/usr/bin/mysql --user=$MYSQL_USER --password=$MYSQL_PASSWORD --execute \"SHOW DATABASES;\""
+      interval: 3s
+      timeout: 1s
+      retries: 5
+
+  dbmedia:
+    image: mysql:5.6
+    environment:
+      - TZ=Europe/Stockholm
+      - MYSQL_ROOT_PASSWORD=supersecret
+      - MYSQL_DATABASE=nf_media
+      - MYSQL_USER=mediaserver
+      - MYSQL_PASSWORD=mediaserver
+    volumes:
+      - vol_dbmedia:/var/lib/mysql
+      - ./initdbmedia:/docker-entrypoint-initdb.d
+    ports:
+      - 13306:3306
+    healthcheck:
+      test: "/usr/bin/mysql --user=$MYSQL_USER --password=$MYSQL_PASSWORD --execute \"SHOW DATABASES;\""
+      interval: 3s
+      timeout: 1s
+      retries: 5
+
+  as:
+    image: dina/naturalist_enhanced:v8.1.1
+    command: /wait-for-it.sh dbnf:3306 -s -t 300 -- /opt/jboss/wildfly/bin/standalone.sh -b 0.0.0.0 -bmanagement 0.0.0.0
+    environment:
+      - VIRTUAL_HOST=beta-naturforskaren.dina-web.net
+#      - VIRTUAL_HOST=naturforskaren.se
+    depends_on:
+      - dbnf
+
+  media:
+    image: dina/media_enhanced:v8.1.2
+    command: /wait-for-it.sh dbmedia:3306 -s -t 300 -- /opt/jboss/wildfly/bin/standalone.sh -b 0.0.0.0 -bmanagement 0.0.0.0
+    environment:
+      - VIRTUAL_HOST=beta-media.dina-web.net
+#      - VIRTUAL_HOST=media.naturforskaren.se
+      - VIRTUAL_PORT=8080
+    volumes:
+      - ./srv/media:/opt/data/media
+      - ./wait-for-it.sh:/wait-for-it.sh
+    depends_on:
+      - dbmedia 
+
